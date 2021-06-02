@@ -1,12 +1,15 @@
 package br.com.carwash.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import br.com.carwash.dto.UsuarioDTO;
 
 @Entity
 public class Cliente implements Serializable{
@@ -26,6 +29,23 @@ public class Cliente implements Serializable{
 	
 	@Column(name = "DS_EMAIL")
 	private String email;
+
+	@Column(name = "SENHA")
+	private String senha;
+	
+	@Column(name = "DATA_NACIMENTO")
+	private Date dataNacimento;
+
+	public Cliente() {
+		super();
+	}
+	public Cliente(UsuarioDTO user) {
+		nome = user.getNome();
+		senha = user.getSenha();
+		email = user.getEmail();
+		cpf = user.getCpf();
+		dataNacimento = user.getDataNacimento();
+	}
 
 	public long getId() {
 		return id;
@@ -57,5 +77,21 @@ public class Cliente implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public Date getDataNacimento() {
+		return dataNacimento;
+	}
+
+	public void setDataNacimento(Date dataNacimento) {
+		this.dataNacimento = dataNacimento;
 	}
 }
