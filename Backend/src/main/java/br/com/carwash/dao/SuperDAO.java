@@ -115,7 +115,7 @@ public class SuperDAO<T> {
 	public <T> List<T> getAllPaginated(Integer initialPage, Integer maxValue) throws Exception {
 		EntityManager em = HibernateUtil.getEntityManager();
 		try {
-			List<T> list = new ArrayList<>();
+			List<T> list = new ArrayList<T>();
 
 			StringBuilder sql = new StringBuilder("FROM ");
 			sql.append(persistedClass.getName());

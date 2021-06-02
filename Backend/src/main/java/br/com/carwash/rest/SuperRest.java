@@ -8,11 +8,12 @@ import javax.ws.rs.core.Context;
 
 public class SuperRest {
 
-	@Context
-	protected HttpServletRequest request;
 
 	@Context
-	protected HttpServletResponse response;
+	private HttpServletRequest request;
+
+	@Context
+	private HttpServletResponse response;
 
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;
