@@ -1,12 +1,16 @@
 package br.com.carwash.rest;
 
+import java.util.List;
 import java.util.Objects;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -24,27 +28,32 @@ public class RestCliente extends SuperRest{
 	
 	@GET
 	@Path("/{idCliente}")
-	public Response encontraCliente(@PathParam("cliente") long idCliente) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response encontraCliente(@PathParam("idCliente") long idCliente) {
+		ClienteDTO cliente=null;
 		try {
-			ClienteDTO cliente =  service.encontraCliente(idCliente);
-			return Response.status(Status.OK).entity(cliente).build();
+			cliente =  service.encontraCliente(idCliente);
 		}catch(Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
+		return Response.status(Status.OK).entity(cliente).build();
 	}
 	
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response encontraClientes(@QueryParam("cliente") long idCliente, @QueryParam("nome") String nomeCliente,
 			@QueryParam("cpf") String cpfClienteS) {
+		List<ClienteDTO> clientes = null;
 		try {
-			service.econtraClientes(idCliente,nomeCliente,cpfClienteS );
+			clientes = service.encontraClientes(idCliente,nomeCliente,cpfClienteS );
 		}catch(Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
-		return Response.status(Status.ACCEPTED).build();
+		return Response.status(Status.ACCEPTED).entity(clientes).build();
 	}
 	
 	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Response cadastarCliente(UsuarioDTO user) {
 		try {
 			if(Objects.isNull(user))

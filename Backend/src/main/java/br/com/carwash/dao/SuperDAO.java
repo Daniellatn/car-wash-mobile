@@ -77,11 +77,9 @@ public class SuperDAO<T> {
 			obj = em.find(persistedClass, id);
 			return obj;
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw e;
-		} finally {
-			em.close();
 		}
-
 	}
 
 	public T getReff(long id) throws Exception {

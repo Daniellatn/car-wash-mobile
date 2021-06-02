@@ -10,10 +10,10 @@ public class ClienteDTO {
 	String email;
 	
 	public ClienteDTO(Cliente c) {
-		this.nome = c.getNome();
-		this.cpf = c.getCpf();
-		this.id = c.getId();
-		this.email = c.getEmail();
+		nome = c.getNome();
+		cpf = c.getCpf();
+		id = c.getId();
+		email = c.getEmail();
 	}
 
 	public long getId() {

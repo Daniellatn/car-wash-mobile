@@ -15,10 +15,9 @@ public class ClienteService {
 	
 	ClienteDAO dao = new ClienteDAO();
 
-	public List<ClienteDTO> econtraClientes(long idCliente, String nomeCliente, String cpfClienteS) throws Exception {
+	public List<ClienteDTO> encontraClientes(long idCliente, String nomeCliente, String cpfClienteS) throws Exception {
 		List<ClienteDTO> clientes = new ArrayList<ClienteDTO>();
 		List<Cliente> entidades = new ArrayList<Cliente>();
-		cpfClienteS = cpfClienteS.replace(".", "").replace("-", "");
 		entidades = dao.getClientes(idCliente, nomeCliente, cpfClienteS);
 		for (Cliente c : entidades) {
 			clientes.add(new ClienteDTO(c));
@@ -32,7 +31,7 @@ public class ClienteService {
 		return new ClienteDTO(c);
 	}
 
-	public void novoCliente(UsuarioDTO user) throws NotValidData {
+	public void novoCliente(UsuarioDTO user) throws Exception {
 		if(user.getEmail() == null ||
 				user.getNome() == null ||
 				user.getSenha() == null ||
@@ -44,7 +43,7 @@ public class ClienteService {
 			Cliente cliente = new Cliente(user);
 			dao.save(cliente);
 		}catch(Exception e) {
-			
+			throw e;
 		}
 	}
 
