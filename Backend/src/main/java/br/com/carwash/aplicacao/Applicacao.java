@@ -1,12 +1,12 @@
 package br.com.carwash.aplicacao;
 
-import org.glassfish.jersey.server.ResourceConfig;
+import javax.ws.rs.ApplicationPath;
 
-import jakarta.ws.rs.ApplicationPath;
+import org.glassfish.jersey.server.ResourceConfig;
 
 @ApplicationPath("api")
 public class Applicacao  extends ResourceConfig {
 	public Applicacao() {
-		packages("br.com.carwash.rest");
+		packages("br.com.carwash.rest.*");
 	}
 }
