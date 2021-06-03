@@ -21,7 +21,7 @@ public class AgendamentoDAO extends SuperDAO<Agendamento> {
 		
 		try {	
 			String hql = " SELECT a FROM Agendamento a "
-					+ " JOIN FETCH a.cliente "
+					+ " JOIN FETCH a.cliente c "
 					+ " WHERE 1=1  ";
 			if(Objects.nonNull(agendamento))
 				hql = hql + " AND a.id = :id ";

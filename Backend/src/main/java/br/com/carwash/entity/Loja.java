@@ -2,11 +2,16 @@ package br.com.carwash.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 import br.com.carwash.dto.LavaJatoDTO;
 
 @Entity
@@ -31,6 +36,9 @@ public class Loja implements Serializable{
 	@Column(name = "DATA_CADASTRO")
 	private LocalDate dataCadastro;
 
+	@OneToMany(fetch = FetchType.LAZY)
+	private Set<Agendamento> agendamentos;
+	
 	public Loja() {
 		
 	}
