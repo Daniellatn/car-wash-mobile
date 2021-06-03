@@ -5,13 +5,11 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+
 
 @Entity
 public class Agendamento implements Serializable {
@@ -23,23 +21,25 @@ public class Agendamento implements Serializable {
 	@Column(name = "ID_AGENDAMENTO")
 	private long id;
 
-	@Column(name = "FK_CLIENTE", nullable = false)
+//	@ManyToOne
+	@JoinColumn(name = "FK_CLIENTE", nullable = false)
 	private Cliente cliente;
 
+//	@ManyToOne
 	@Column(name = "FK_JAVA_JATO", nullable = false)
-	private LavaJato javaJato;
+	private Loja javaJato;
 
 	@Column(name = "DTH_LAVAGEM", nullable = false)
 	private LocalDate dataLavagem;
 
-	@Column(name = "DTH_AGENDAMENTO", nullable = false)
+	@JoinColumn(name = "DTH_AGENDAMENTO", nullable = false)
 	private LocalDate dataAgendamento;
 
-	public LavaJato getJavaJato() {
+	public Loja getJavaJato() {
 		return javaJato;
 	}
 
-	public void setJavaJato(LavaJato javaJato) {
+	public void setJavaJato(Loja javaJato) {
 		this.javaJato = javaJato;
 	}
 

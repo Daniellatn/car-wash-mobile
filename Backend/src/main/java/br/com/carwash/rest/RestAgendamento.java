@@ -1,10 +1,13 @@
 package br.com.carwash.rest;
 
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -17,8 +20,19 @@ public class RestAgendamento extends SuperRest{
 	AgendamentoService service= new AgendamentoService(); 
 	
 	@GET
+	public Response EcontraoAgendamentos(@QueryParam("agendamento") Long agendamento,
+			@QueryParam("inicio") Long inicio, @QueryParam("fim") Long fim,@QueryParam("cliente") Long cliente) {
+		try {
+			List<AgendamentoDTO> agendamentoDto = service.buscaListaAgendamentos(agendamento,cliente,inicio,fim);
+			return Response.status(Status.FOUND).entity(agendamentoDto).build();
+		}catch(Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+	@GET
 	@Path("/{agendamento}")
-	public Response encontraAgendamento(@PathParam("agendamento") long agendamento) {
+	public Response encontraAgendamento(@PathParam("agendamento") Long agendamento) {
 		try {
 			AgendamentoDTO agendamentoDto = service
 					.buscaAgendamentoPorId(agendamento);
@@ -38,8 +52,8 @@ public class RestAgendamento extends SuperRest{
 		try {
 			service.cadastarAgendamento(agendamento);
 		}catch(Exception e) {
-			
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
-		return null;
+		return Response.status(Status.ACCEPTED).build();
 	}
 }

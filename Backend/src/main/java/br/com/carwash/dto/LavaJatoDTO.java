@@ -1,22 +1,21 @@
 package br.com.carwash.dto;
 
-import java.util.Date;
-
-import br.com.carwash.entity.LavaJato;
+import java.time.LocalDate;
+import br.com.carwash.entity.Loja;
 
 public class LavaJatoDTO {
 	
 	private String nomeLoja;
 	private long id;
 	private String email;
-	private Date dataCadastro;
+	private LocalDate dataCadastro;
 	private String cnpj;
 
 	public LavaJatoDTO() {
 		
 	}
 	
-	public LavaJatoDTO(LavaJato l) {
+	public LavaJatoDTO(Loja l) {
 		cnpj = l.getCnpj();
 		dataCadastro = l.getDataCadastro();
 		email = l.getEmail();
@@ -48,11 +47,11 @@ public class LavaJatoDTO {
 		this.email = email;
 	}
 
-	public Date getDataCadastro() {
+	public LocalDate getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 

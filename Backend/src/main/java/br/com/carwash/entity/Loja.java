@@ -1,19 +1,16 @@
 package br.com.carwash.entity;
 
 import java.io.Serializable;
-import java.util.Date;
-
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-
 import br.com.carwash.dto.LavaJatoDTO;
 
 @Entity
-public class LavaJato implements Serializable{
+public class Loja implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -32,12 +29,12 @@ public class LavaJato implements Serializable{
 	private String email;
 	
 	@Column(name = "DATA_CADASTRO")
-	private Date dataCadastro;
+	private LocalDate dataCadastro;
 
-	public LavaJato() {
+	public Loja() {
 		
 	}
-	public LavaJato(LavaJatoDTO loja) {
+	public Loja(LavaJatoDTO loja) {
 		id = loja.getId();
 		cnpj = loja.getCnpj();
 		nome = loja.getNomeLoja();
@@ -77,11 +74,11 @@ public class LavaJato implements Serializable{
 		this.email = email;
 	}
 
-	public Date getDataCadastro() {
+	public LocalDate getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}	
 }
