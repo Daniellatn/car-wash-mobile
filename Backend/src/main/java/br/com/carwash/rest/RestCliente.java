@@ -49,7 +49,7 @@ public class RestCliente extends SuperRest{
 		}catch(Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
-		return Response.status(Status.ACCEPTED).entity(clientes).build();
+		return Response.status(Status.FOUND).entity(clientes).build();
 	}
 	
 	@POST
