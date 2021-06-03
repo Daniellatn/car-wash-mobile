@@ -42,7 +42,7 @@ public class ClienteDAO extends SuperDAO<Cliente> {
 				
 			return query.getResultList();
 		}catch(NoResultException e) {
-			return new ArrayList<>();
+			return new ArrayList<Cliente>();
 		}
 		catch(Exception e){
 			System.out.println(e.getMessage());
