@@ -21,7 +21,7 @@ public class Agendamento implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_AGENDAMENTO")
-	private Integer id;
+	private long id;
 
 	@Column(name = "FK_CLIENTE", nullable = false)
 	private Cliente cliente;
@@ -51,11 +51,11 @@ public class Agendamento implements Serializable {
 		this.dataAgendamento = dataAgendamento;
 	}
 
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -43,6 +43,7 @@ public class ClienteService {
 			Cliente cliente = new Cliente(user);
 			dao.save(cliente);
 		}catch(Exception e) {
+			e.printStackTrace();
 			throw e;
 		}
 	}
