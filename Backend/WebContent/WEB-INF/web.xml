@@ -15,4 +15,7 @@
 			<param-value>br.com.carwash.aplicacao</param-value>
 		</init-param>
 	</servlet>
+	<error-page>
+		<location>/erro.html</location>
+	</error-page>
 </web-app>
