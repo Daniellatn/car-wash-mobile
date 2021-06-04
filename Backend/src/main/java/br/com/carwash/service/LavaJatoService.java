@@ -44,4 +44,19 @@ public class LavaJatoService {
 		}
 	}
 
+	public void excluirLoja(Long idLoja) throws Exception {
+		dao.delete(idLoja);
+	}
+
+	public void editarLoja(LavaJatoDTO loja) throws Exception {
+		Loja eLoja= dao.find(loja.getId());
+		if(!eLoja.getNome().equals(loja.getNomeLoja()) || loja.getNomeLoja().isEmpty())
+			loja.setNomeLoja(eLoja.getNome());
+		if(!eLoja.getCnpj().equals(loja.getCnpj()) || loja.getCnpj().isEmpty())
+			loja.setCnpj(eLoja.getCnpj());
+		if(!eLoja.getEmail().equals(loja.getEmail()) || loja.getEmail().isEmpty())
+			loja.setEmail(eLoja.getEmail());
+		dao.save(new Loja(loja));
+	}
+
 }

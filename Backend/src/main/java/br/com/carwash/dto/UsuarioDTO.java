@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class UsuarioDTO {
 
+	private Long id;
 	private String email;
 	private String nome;
 	private String senha;
@@ -23,7 +24,7 @@ public class UsuarioDTO {
 	}
 
 	public String getCpf() {
-		return cpf;
+		return cpf.replace(".", "").replace("-", "");
 	}
 
 	public Date getDataNacimento() {
@@ -49,5 +50,12 @@ public class UsuarioDTO {
 	public void setDataNacimento(Date dataNacimento) {
 		this.dataNacimento = dataNacimento;
 	}
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

@@ -63,7 +63,8 @@ public class SuperDAO<T> {
 			em.getTransaction().commit();
 		} catch (Exception e) {
 			em.getTransaction().rollback();
-			throw new Exception(e);
+			e.printStackTrace();
+			throw e;
 		} finally {
 			em.close();
 		}

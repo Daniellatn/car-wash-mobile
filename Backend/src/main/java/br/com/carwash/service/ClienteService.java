@@ -48,4 +48,24 @@ public class ClienteService {
 		}
 	}
 
+	public void excluirCliente(Long cliente) throws Exception {
+		dao.delete(cliente);		
+	}
+
+	public void editarCliente(UsuarioDTO user) throws Exception {
+		Cliente cliente = dao.find(user.getId());
+		if(!cliente.getNome().equals(user.getNome()) || user.getNome() == null)
+			user.setNome(cliente.getNome());
+		if(!cliente.getCpf().equals(user.getCpf()) || user.getCpf()== null)
+			user.setCpf(cliente.getCpf());
+		if(!cliente.getDataNacimento().equals(user.getDataNacimento()) || user.getDataNacimento() == null)
+			user.setDataNacimento(cliente.getDataNacimento());
+		if(!cliente.getEmail().equals(user.getEmail()) || user.getEmail()== null)
+			user.setEmail(cliente.getEmail());
+		if(!cliente.getSenha().equals(user.getSenha()) || user.getSenha()== null)	
+			user.setSenha(cliente.getSenha());
+		dao.update(new Cliente(user));
+		
+	}
+
 }

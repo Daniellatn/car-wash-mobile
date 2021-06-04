@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -25,7 +27,31 @@ public class RestCliente extends SuperRest{
 	
 	static final ClienteService service = new ClienteService(); 
 	
+	@PUT
+	public Response solicitarEdicaoCliente(UsuarioDTO user) {
+		try {
+			service.editarCliente(user);
+		}catch(IllegalArgumentException e) {
+			return Response.status(Status.EXPECTATION_FAILED).build();
+		}catch(Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+		return Response.status(Status.ACCEPTED).build();
+	}
 	
+	@DELETE
+	@Path("/{idCliente}")
+	public Response solicitarDelecaoCliente(@PathParam("idCliente") Long cliente) {
+		try {
+			service.excluirCliente(cliente);
+		}
+		catch(IllegalArgumentException e) {
+			return Response.status(Status.EXPECTATION_FAILED).build();			
+		}catch(Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+		return Response.status(Status.ACCEPTED).build();
+	}
 	@GET
 	@Path("/{idCliente}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -64,7 +90,7 @@ public class RestCliente extends SuperRest{
 		}catch(Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
-		return Response.status(Status.ACCEPTED).build();
+		return Response.status(Status.CREATED).build();
 	}
 	
 }
