@@ -38,7 +38,7 @@ public class AgendamentoService {
 		dao.save(agendamento);
 	}
 
-	public List<AgendamentoDTO> buscaListaAgendamentos(Long agendamento, Long cliente, Long inicio, Long fim) {
+	public List<AgendamentoDTO> buscaListaAgendamentos(Long agendamento, Long cliente, Long inicio, Long fim) throws Exception {
 		List<AgendamentoDTO> listaDto = new ArrayList<AgendamentoDTO>();
 		List<Agendamento> listaEntity= dao.pegarListaDeAgendamentos(agendamento, cliente,inicio, fim);
 		for(Agendamento a: listaEntity)

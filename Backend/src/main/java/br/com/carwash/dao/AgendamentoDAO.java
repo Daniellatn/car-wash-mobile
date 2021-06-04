@@ -16,7 +16,7 @@ public class AgendamentoDAO extends SuperDAO<Agendamento> {
 	}
 
 	public List<Agendamento> pegarListaDeAgendamentos(Long agendamento, Long cliente, Long inicio,
-			Long fim) {
+			Long fim) throws Exception {
 		EntityManager em = HibernateUtil.getEntityManager();
 		
 		try {	
