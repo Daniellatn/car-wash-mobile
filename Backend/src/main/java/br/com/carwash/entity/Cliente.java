@@ -2,6 +2,7 @@ package br.com.carwash.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,36 +16,37 @@ import javax.persistence.OneToMany;
 import br.com.carwash.dto.UsuarioDTO;
 
 @Entity
-public class Cliente implements Serializable{
-	
+public class Cliente implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="ID_CLIENTE")
+	@Column(name = "ID_CLIENTE")
 	private long id;
-	
-	@Column(name="CPF",unique=true)
+
+	@Column(name = "CPF", unique = true)
 	private String cpf;
-	
+
 	@Column(name = "NOME")
 	private String nome;
-	
+
 	@Column(name = "DS_EMAIL")
 	private String email;
 
 	@Column(name = "SENHA")
 	private String senha;
-	
+
 	@Column(name = "DATA_NACIMENTO")
 	private Date dataNacimento;
-	
+
 	@OneToMany(fetch = FetchType.LAZY)
 	private Set<Agendamento> agendamentos;
 
 	public Cliente() {
 		super();
 	}
+
 	public Cliente(UsuarioDTO user) {
 		nome = user.getNome();
 		senha = user.getSenha();
@@ -99,5 +101,19 @@ public class Cliente implements Serializable{
 
 	public void setDataNacimento(Date dataNacimento) {
 		this.dataNacimento = dataNacimento;
+	}
+
+	public Cliente toMerge(UsuarioDTO user) {
+		if (Objects.nonNull(user.getNome()))
+			this.nome = user.getNome();
+		if (Objects.nonNull(user.getEmail()))
+			this.email = user.getEmail();
+		if (Objects.nonNull(user.getSenha()))
+			this.senha = user.getSenha();
+		if (Objects.nonNull(user.getDataNacimento()))
+			this.dataNacimento = user.getDataNacimento();
+		if (Objects.nonNull(user.getCpf()))
+			this.cpf = user.getCpf();
+		return this;
 	}
 }

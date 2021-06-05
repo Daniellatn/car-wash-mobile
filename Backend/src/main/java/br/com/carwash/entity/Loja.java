@@ -2,6 +2,7 @@ package br.com.carwash.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import br.com.carwash.dto.LavaJatoDTO;
@@ -88,5 +90,13 @@ public class Loja implements Serializable{
 
 	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
+	}
+	
+	public Loja toEtity(LavaJatoDTO lavajato) {
+		if (Objects.nonNull(lavajato.getNomeLoja())) this.nome = lavajato.getNomeLoja();
+		if (Objects.nonNull(lavajato.getCnpj())) this.cnpj = lavajato.getCnpj();
+		if (Objects.nonNull(lavajato.getDataCadastro())) this.dataCadastro = lavajato.getDataCadastro();
+		if (Objects.nonNull(lavajato.getEmail())) this.email = lavajato.getEmail();
+		return this;
 	}	
 }

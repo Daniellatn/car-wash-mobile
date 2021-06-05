@@ -24,7 +24,7 @@ public class UsuarioDTO {
 	}
 
 	public String getCpf() {
-		return cpf.replace(".", "").replace("-", "");
+		return cpf != null ? cpf.replace(".", "").replace("-", ""): cpf;
 	}
 
 	public Date getDataNacimento() {

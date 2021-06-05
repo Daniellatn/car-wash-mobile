@@ -31,6 +31,7 @@ public class RestJavaJato extends SuperRest{
 		}catch(IllegalArgumentException e) {
 			return Response.status(Status.EXPECTATION_FAILED).build();
 		}catch(Exception e) {
+			e.printStackTrace();
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
 		return Response.status(Status.ACCEPTED).build();
@@ -59,7 +60,7 @@ public class RestJavaJato extends SuperRest{
 		}catch(Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
-		return Response.status(Status.OK).entity(lojas).build();
+		return Response.status(Status.FOUND).entity(lojas).build();
 	}
 	
 	@GET
