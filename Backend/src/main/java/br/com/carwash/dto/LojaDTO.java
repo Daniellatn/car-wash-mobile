@@ -1,26 +1,31 @@
 package br.com.carwash.dto;
 
 import java.time.LocalDate;
+
+import com.google.protobuf.DescriptorProtos.SourceCodeInfo.Location;
+
 import br.com.carwash.entity.Loja;
 
-public class LavaJatoDTO {
+public class LojaDTO {
 	
 	private String nomeLoja;
-	private long id;
+	private Long id;
 	private String email;
 	private LocalDate dataCadastro;
 	private String cnpj;
+//	private Location localizacao = Location.getDefaultInstance();
 
-	public LavaJatoDTO() {
+	public LojaDTO() {
 		
 	}
 	
-	public LavaJatoDTO(Loja l) {
+	public LojaDTO(Loja l) {
 		cnpj = l.getCnpj();
 		dataCadastro = l.getDataCadastro();
 		email = l.getEmail();
 		id = l.getId();
 		nomeLoja = l.getNome();
+//		localizacao = l.getLocalizacao();
 	}
 
 	public String getNomeLoja() {
@@ -62,4 +67,12 @@ public class LavaJatoDTO {
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
+//
+//	public Location getLocalizacao() {
+//		return localizacao;
+//	}
+//
+//	public void setLocalizacao(Location localizacao) {
+//		this.localizacao = localizacao;
+//	}
 }

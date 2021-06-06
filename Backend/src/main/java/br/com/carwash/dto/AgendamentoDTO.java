@@ -14,7 +14,7 @@ public class AgendamentoDTO {
 	}
 	public AgendamentoDTO(Agendamento a) {
 	idCliente = a.getCliente().getId();
-	idLavaJato = a.getJavaJato().getId();
+	idLavaJato = a.getLavaJato().getId();
 	agendamento = a.getDataAgendamento();
 	}
 	public long getIdCliente() {
@@ -30,7 +30,7 @@ public class AgendamentoDTO {
 		this.idLavaJato = idLavaJato;
 	}
 	public LocalDate getAgendamento() {
-		return agendamento;
+		return agendamento == null ? LocalDate.now() : agendamento;
 	}
 	public void setAgendamento(LocalDate agendamento) {
 		this.agendamento = agendamento;

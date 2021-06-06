@@ -6,34 +6,36 @@ import java.util.List;
 
 import javax.ws.rs.core.Response.Status;
 
-import br.com.carwash.dao.LavaJatoDAO;
-import br.com.carwash.dto.LavaJatoDTO;
+import br.com.carwash.dao.LojaDAO;
+import br.com.carwash.dto.LojaDTO;
 import br.com.carwash.entity.Loja;
-import br.com.carwash.exception.NotValidData;
+import br.com.carwash.exception.NotValidDataException;
 
 public class LavaJatoService {
 
-	LavaJatoDAO dao = new LavaJatoDAO(); 
+	LojaDAO dao = new LojaDAO(); 
 	
-	public List<LavaJatoDTO> econtrarLojas(Long id, String nomeLoja, String email, String cnpj) throws Exception {
-		List<LavaJatoDTO> lojas = new ArrayList<LavaJatoDTO>();
+	public List<LojaDTO> econtrarLojas(Long id, String nomeLoja, String email, String cnpj) throws Exception {
+		List<LojaDTO> lojas = new ArrayList<LojaDTO>();
 		List<Loja> lojasEt = dao.getListLojas(id,nomeLoja,email,cnpj);
 		for(Loja l : lojasEt) {
-			lojas.add(new LavaJatoDTO(l));
+			lojas.add(new LojaDTO(l));
 		}
 		return lojas;
 	}
 
-	public LavaJatoDTO encontraLoja(Long idLoja) throws Exception {
+	public LojaDTO encontraLoja(Long idLoja) throws Exception {
 		Loja l =null;
 		l = dao.find(idLoja);
-		return new LavaJatoDTO(l);
+		if(l == null)
+			throw new NotValidDataException(Status.NOT_FOUND,"Elemento inexistente");
+		return new LojaDTO(l);
 	}
 
-	public void cadastrarLoja(LavaJatoDTO loja) throws Exception {
+	public void cadastrarLoja(LojaDTO loja) throws Exception {
 		if(loja.getCnpj() == null ||  loja.getEmail() == null ||
-				loja.getNomeLoja() == null)
-			throw new NotValidData(Status.NOT_ACCEPTABLE,"faltando parametros");
+				loja.getNomeLoja() == null )
+			throw new NotValidDataException(Status.NOT_ACCEPTABLE,"faltando parametros");
 		try {
 			// TODO: loja.setDataCadastro();
 			Loja l = new Loja(loja);
@@ -48,7 +50,7 @@ public class LavaJatoService {
 		dao.delete(idLoja);
 	}
 
-	public void editarLoja(LavaJatoDTO lavajato) throws Exception {
+	public void editarLoja(LojaDTO lavajato) throws Exception {
 		Loja loja= dao.find(lavajato.getId());
 		dao.update(loja.toEtity(lavajato));
 	}

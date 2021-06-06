@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response.Status;
 
 import br.com.carwash.dto.ClienteDTO;
 import br.com.carwash.dto.UsuarioDTO;
-import br.com.carwash.exception.NotValidData;
+import br.com.carwash.exception.NotValidDataException;
 import br.com.carwash.service.ClienteService;
 
 
@@ -26,6 +26,20 @@ import br.com.carwash.service.ClienteService;
 public class RestCliente extends SuperRest{	
 	
 	static final ClienteService service = new ClienteService(); 
+	
+	@POST
+	@Path("/{idCliente}/agendamento/{idloja}")
+	public Response solicitarAgendamento(@PathParam("idloja")Long idLoja,@PathParam("idCliente")Long idCliente,@QueryParam("dth") Long dth) {
+		try {
+			service.marcarAgendamento(idCliente,idLoja,dth);
+		}catch(NotValidDataException e) {
+			return Response.status(e.getStatusCode()).entity(e.getMessage()).build();
+		}
+		catch(Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+		return Response.status(Status.CREATED).build();
+	}
 	
 	@PUT
 	public Response solicitarEdicaoCliente(UsuarioDTO user) {
@@ -59,7 +73,10 @@ public class RestCliente extends SuperRest{
 		ClienteDTO cliente=null;
 		try {
 			cliente =  service.encontraCliente(idCliente);
+		}catch(NotValidDataException e) {
+			return Response.status(e.getStatusCode()).entity(e.getMessage()).build();
 		}catch(Exception e) {
+			e.printStackTrace();
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
 		return Response.status(Status.OK).entity(cliente).build();
@@ -85,7 +102,7 @@ public class RestCliente extends SuperRest{
 			if(Objects.isNull(user))
 				return Response.status(Status.NOT_ACCEPTABLE).build();
 			service.novoCliente(user);
-		}catch(NotValidData e) {
+		}catch(NotValidDataException e) {
 			return Response.status(e.getStatusCode()).build();
 		}catch(Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();

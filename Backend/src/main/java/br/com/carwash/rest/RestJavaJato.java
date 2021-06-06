@@ -16,8 +16,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import br.com.carwash.dto.LavaJatoDTO;
-import br.com.carwash.exception.NotValidData;
+import br.com.carwash.dto.LojaDTO;
+import br.com.carwash.exception.NotValidDataException;
 import br.com.carwash.service.LavaJatoService;
 
 @Path("lavajato")
@@ -25,7 +25,7 @@ public class RestJavaJato extends SuperRest{
 
 	static final LavaJatoService service = new LavaJatoService(); 
 	@PUT
-	public Response solicitarEdicaoLoja(LavaJatoDTO loja) {
+	public Response solicitarEdicaoLoja(LojaDTO loja) {
 		try {
 			service.editarLoja(loja);
 		}catch(IllegalArgumentException e) {
@@ -54,7 +54,7 @@ public class RestJavaJato extends SuperRest{
 	public Response buscarLojas(@QueryParam("cnpj") String cnpj,
 			@QueryParam("nome") String nomeLoja, 
 			@QueryParam("email") String email,@QueryParam("loja") Long id) {
-		List<LavaJatoDTO> lojas = null;
+		List<LojaDTO> lojas = null;
 		try {
 			lojas = service.econtrarLojas(id,nomeLoja,email,cnpj);
 		}catch(Exception e) {
@@ -67,10 +67,13 @@ public class RestJavaJato extends SuperRest{
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{idLoja}")
 	public Response buscaCleinte(@PathParam("idLoja")Long idLoja) {
-		LavaJatoDTO loja = null;
+		LojaDTO loja = null;
 		try {
 			loja = service.encontraLoja(idLoja);
-		}catch(Exception e) {
+		}catch(NotValidDataException e) {
+			return Response.status(e.getStatusCode()).entity(e.getMessage()).build();
+		}
+		catch(Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
 		return Response.status(Status.FOUND).entity(loja).build();
@@ -78,12 +81,12 @@ public class RestJavaJato extends SuperRest{
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response criaNovaLoja(LavaJatoDTO loja) {
+	public Response criaNovaLoja(LojaDTO loja) {
 		if(Objects.isNull(loja))
 			return Response.status(Status.BAD_REQUEST).build();
 		try {
 			service.cadastrarLoja(loja);
-		}catch(NotValidData e) {
+		}catch(NotValidDataException e) {
 			return Response.status(e.getStatusCode()).build();
 		}
 		catch(Exception e) {

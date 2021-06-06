@@ -1,5 +1,6 @@
 package br.com.carwash.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -8,7 +9,7 @@ import javax.ws.rs.NotFoundException;
 
 import br.com.carwash.dao.AgendamentoDAO;
 import br.com.carwash.dao.ClienteDAO;
-import br.com.carwash.dao.LavaJatoDAO;
+import br.com.carwash.dao.LojaDAO;
 import br.com.carwash.dto.AgendamentoDTO;
 import br.com.carwash.entity.Agendamento;
 import br.com.carwash.entity.Cliente;
@@ -18,7 +19,7 @@ public class AgendamentoService {
 	
 	AgendamentoDAO dao = new AgendamentoDAO();
 	ClienteDAO clienteDao = new ClienteDAO();
-	LavaJatoDAO lavaJatoDao = new LavaJatoDAO(); 
+	LojaDAO lavaJatoDao = new LojaDAO(); 
 
 	public AgendamentoDTO buscaAgendamentoPorId(Long agendamento) throws Exception {
 		Agendamento a =null;
@@ -33,8 +34,9 @@ public class AgendamentoService {
 		Loja lj = lavaJatoDao.find(agendamentoDto.getIdLavaJato());
 		Agendamento agendamento = new Agendamento();
 		agendamento.setCliente(c);
-		agendamento.setJavaJato(lj);
+		agendamento.setLavaJato(lj);
 		agendamento.setDataAgendamento(agendamentoDto.getAgendamento());
+		agendamento.setDataLavagem(LocalDate.now());;
 		dao.save(agendamento);
 	}
 

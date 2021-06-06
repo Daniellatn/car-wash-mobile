@@ -1,14 +1,18 @@
 package br.com.carwash.entity;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Entity
@@ -19,28 +23,40 @@ public class Agendamento implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_AGENDAMENTO")
-	private long id;
+	private Long id;
 
-//	@ManyToOne
-	@JoinColumn(name = "FK_CLIENTE", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Cliente.class)
+	@JoinColumn(name = "FK_CLIENTE", referencedColumnName="ID_CLIENTE" ,nullable = false)
 	private Cliente cliente;
 
-//	@ManyToOne
-	@Column(name = "FK_JAVA_JATO", nullable = false)
-	private Loja javaJato;
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Loja.class)
+	@JoinColumn(name = "FK_LOJA",referencedColumnName="ID_LOJA" , nullable = false)
+	private Loja lavaJato;
 
 	@Column(name = "DTH_LAVAGEM", nullable = false)
 	private LocalDate dataLavagem;
 
-	@JoinColumn(name = "DTH_AGENDAMENTO", nullable = false)
+	@Column(name = "DTH_AGENDAMENTO", nullable = false)
 	private LocalDate dataAgendamento;
 
-	public Loja getJavaJato() {
-		return javaJato;
+	public Agendamento() {
+		
+	}
+	public Agendamento(Cliente cliente, Loja loja,Long dth) {
+		this.cliente= cliente;
+		this.lavaJato = loja;
+		this.dataAgendamento = Instant.ofEpochMilli(dth)
+										.atZone(ZoneId
+												.systemDefault())
+										.toLocalDate();;
 	}
 
-	public void setJavaJato(Loja javaJato) {
-		this.javaJato = javaJato;
+	public Loja getLavaJato() {
+		return lavaJato;
+	}
+
+	public void setLavaJato(Loja javaJato) {
+		this.lavaJato = javaJato;
 	}
 
 	public LocalDate getDataAgendamento() {
@@ -65,5 +81,14 @@ public class Agendamento implements Serializable {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	public LocalDate getDataLavagem() {
+		return dataLavagem;
+	}
+	public void setDataLavagem(LocalDate dataLavagem) {
+		this.dataLavagem = dataLavagem;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

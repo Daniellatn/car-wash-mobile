@@ -9,9 +9,9 @@ import javax.persistence.Query;
 import br.com.carwash.entity.Loja;
 import br.com.carwash.utils.HibernateUtil;
 
-public class LavaJatoDAO extends SuperDAO<Loja> {
+public class LojaDAO extends SuperDAO<Loja> {
 
-	public LavaJatoDAO() {
+	public LojaDAO() {
 		super(Loja.class);
 	}
 

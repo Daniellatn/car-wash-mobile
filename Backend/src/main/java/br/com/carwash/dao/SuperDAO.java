@@ -31,6 +31,7 @@ public class SuperDAO<T> {
 			return entity;
 		} catch (Exception e) {
 			em.getTransaction().rollback();
+			e.printStackTrace();
 			throw e;
 		} finally {
 			em.close();
