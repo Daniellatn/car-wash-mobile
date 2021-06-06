@@ -1,4 +1,5 @@
 **/Backend/target/
 /.idea**
+**/.idea
 /Backend/target/
 **/target/
