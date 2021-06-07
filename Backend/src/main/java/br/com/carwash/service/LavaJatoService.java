@@ -1,5 +1,6 @@
 package br.com.carwash.service;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,9 +38,8 @@ public class LavaJatoService {
 				loja.getNomeLoja() == null )
 			throw new NotValidDataException(Status.NOT_ACCEPTABLE,"faltando parametros");
 		try {
-			// TODO: loja.setDataCadastro();
-			Loja l = new Loja(loja);
-			l.setDataCadastro(LocalDate.now());
+			Loja l = loja.toEntity();
+			l.setDataCadastro(Date.valueOf(LocalDate.now()));
 			dao.save(l);
 		}catch(Exception e) {
 			throw e;

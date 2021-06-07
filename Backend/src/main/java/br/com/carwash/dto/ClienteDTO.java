@@ -1,19 +1,23 @@
 package br.com.carwash.dto;
 
+import java.util.Date;
+
 import br.com.carwash.entity.Cliente;
 
 public class ClienteDTO {
 	
-	long id;
-	String nome;
-	String cpf;
-	String email;
+	private Long id;
+	private String nome;
+	private String cpf;
+	private String email;
+	private Date dataNacimento;
 	
 	public ClienteDTO(Cliente c) {
 		nome = c.getNome();
 		cpf = c.getCpf();
 		id = c.getId();
 		email = c.getEmail();
+		dataNacimento = c.getDataNacimento();
 	}
 
 	public long getId() {
@@ -46,5 +50,17 @@ public class ClienteDTO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Date getDataNacimento() {
+		return dataNacimento;
+	}
+
+	public void setDataNacimento(Date dataNacimento) {
+		this.dataNacimento = dataNacimento;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

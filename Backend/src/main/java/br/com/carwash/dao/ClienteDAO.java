@@ -18,19 +18,19 @@ public class ClienteDAO extends SuperDAO<Cliente> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Cliente> getClientes(long idCliente, String nomeCliente, String cpfClienteS) throws Exception {
+	public List<Cliente> getClientes(Long idCliente, String nomeCliente, String cpfClienteS) throws Exception {
 		EntityManager em = HibernateUtil.getEntityManager();
 		try {
-			String hql = " SELECT C FROM Cliente C WHERE 1=1 ";
+			String hql = " SELECT C FROM Cliente C WHERE C.excluido = :excluido ";
 			if(Objects.nonNull(idCliente))
-				if(idCliente != 0)
 				hql = hql + " AND C.id = :idCliente " ; 
 			if(Objects.nonNull(nomeCliente))
 				hql = hql + " AND C.nome LIKE %:nomeCliente% " ;
 			if(Objects.nonNull(cpfClienteS))
 				hql = hql + " AND C.cpf LIKE %:cpfClienteS% " ;
 			
-			Query query = em.createQuery(hql,Cliente.class);
+			Query query = em.createQuery(hql,Cliente.class)
+					.setParameter("excluido", (Boolean)false);
 			
 			if(Objects.nonNull(idCliente))
 				if(idCliente != 0)

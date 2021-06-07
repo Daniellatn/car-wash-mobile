@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 
 @Entity
 public class Agendamento implements Serializable {
@@ -25,30 +25,29 @@ public class Agendamento implements Serializable {
 	@Column(name = "ID_AGENDAMENTO")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Cliente.class)
-	@JoinColumn(name = "FK_CLIENTE", referencedColumnName="ID_CLIENTE" ,nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Cliente.class)
+	@JoinColumn(name = "FK_CLIENTE", referencedColumnName = "ID_CLIENTE", nullable = false)
 	private Cliente cliente;
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Loja.class)
-	@JoinColumn(name = "FK_LOJA",referencedColumnName="ID_LOJA" , nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Loja.class)
+	@JoinColumn(name = "FK_LOJA", referencedColumnName = "ID_LOJA", nullable = false)
 	private Loja lavaJato;
 
 	@Column(name = "DTH_LAVAGEM", nullable = false)
-	private LocalDate dataLavagem;
+	private Date dataLavagem;
 
 	@Column(name = "DTH_AGENDAMENTO", nullable = false)
-	private LocalDate dataAgendamento;
+	private Date dataAgendamento;
 
 	public Agendamento() {
-		
+
 	}
-	public Agendamento(Cliente cliente, Loja loja,Long dth) {
-		this.cliente= cliente;
+
+	public Agendamento(Cliente cliente, Loja loja, Long dth) {
+		this.cliente = cliente;
 		this.lavaJato = loja;
-		this.dataAgendamento = Instant.ofEpochMilli(dth)
-										.atZone(ZoneId
-												.systemDefault())
-										.toLocalDate();;
+		this.dataLavagem = new Date(dth);
+		this.dataAgendamento = new Date();
 	}
 
 	public Loja getLavaJato() {
@@ -59,11 +58,11 @@ public class Agendamento implements Serializable {
 		this.lavaJato = javaJato;
 	}
 
-	public LocalDate getDataAgendamento() {
+	public Date getDataAgendamento() {
 		return dataAgendamento;
 	}
 
-	public void setDataAgendamento(LocalDate dataAgendamento) {
+	public void setDataAgendamento(Date dataAgendamento) {
 		this.dataAgendamento = dataAgendamento;
 	}
 
@@ -82,12 +81,15 @@ public class Agendamento implements Serializable {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public LocalDate getDataLavagem() {
+
+	public Date getDataLavagem() {
 		return dataLavagem;
 	}
-	public void setDataLavagem(LocalDate dataLavagem) {
+
+	public void setDataLavagem(Date dataLavagem) {
 		this.dataLavagem = dataLavagem;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}

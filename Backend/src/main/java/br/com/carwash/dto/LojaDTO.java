@@ -1,6 +1,7 @@
 package br.com.carwash.dto;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import com.google.protobuf.DescriptorProtos.SourceCodeInfo.Location;
 
@@ -11,7 +12,7 @@ public class LojaDTO {
 	private String nomeLoja;
 	private Long id;
 	private String email;
-	private LocalDate dataCadastro;
+	private Date dataCadastro;
 	private String cnpj;
 //	private Location localizacao = Location.getDefaultInstance();
 
@@ -52,11 +53,11 @@ public class LojaDTO {
 		this.email = email;
 	}
 
-	public LocalDate getDataCadastro() {
+	public Date getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(LocalDate dataCadastro) {
+	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 
@@ -75,4 +76,14 @@ public class LojaDTO {
 //	public void setLocalizacao(Location localizacao) {
 //		this.localizacao = localizacao;
 //	}
+
+	public Loja toEntity() {
+		Loja loja = new Loja();
+		if(nomeLoja != null) loja.setNome(nomeLoja);;
+		if(id != null) loja.setId(id);
+		if(email != null) loja.setEmail(email);;
+		if(dataCadastro != null) loja.setDataCadastro(dataCadastro);
+		if(cnpj != null) this.setCnpj(cnpj);;
+		return loja;
+	}
 }

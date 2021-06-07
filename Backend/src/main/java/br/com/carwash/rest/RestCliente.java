@@ -33,6 +33,7 @@ public class RestCliente extends SuperRest{
 		try {
 			service.marcarAgendamento(idCliente,idLoja,dth);
 		}catch(NotValidDataException e) {
+			e.printStackTrace();
 			return Response.status(e.getStatusCode()).entity(e.getMessage()).build();
 		}
 		catch(Exception e) {
@@ -84,7 +85,7 @@ public class RestCliente extends SuperRest{
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response encontraClientes(@QueryParam("cliente") long idCliente, @QueryParam("nome") String nomeCliente,
+	public Response encontraClientes(@QueryParam("cliente") Long idCliente, @QueryParam("nome") String nomeCliente,
 			@QueryParam("cpf") String cpfClienteS) {
 		List<ClienteDTO> clientes = null;
 		try {

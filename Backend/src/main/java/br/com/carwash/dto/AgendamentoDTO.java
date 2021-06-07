@@ -1,6 +1,6 @@
 package br.com.carwash.dto;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import br.com.carwash.entity.Agendamento;
 
@@ -8,7 +8,7 @@ public class AgendamentoDTO {
 
 	private long idCliente;
 	private long idLavaJato;
-	private LocalDate agendamento;
+	private Date agendamento;
 	public AgendamentoDTO() {
 		
 	}
@@ -29,10 +29,10 @@ public class AgendamentoDTO {
 	public void setIdLavaJato(long idLavaJato) {
 		this.idLavaJato = idLavaJato;
 	}
-	public LocalDate getAgendamento() {
-		return agendamento == null ? LocalDate.now() : agendamento;
+	public Date getAgendamento() {
+		return agendamento;
 	}
-	public void setAgendamento(LocalDate agendamento) {
+	public void setAgendamento(Date agendamento) {
 		this.agendamento = agendamento;
 	}
 }

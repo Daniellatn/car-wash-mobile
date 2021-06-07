@@ -2,6 +2,7 @@ package br.com.carwash.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,18 +36,10 @@ public class Loja implements Serializable {
 	private String email;
 
 	@Column(name = "DATA_CADASTRO")
-	private LocalDate dataCadastro;
+	private Date dataCadastro;
 
 	public Loja() {
 
-	}
-
-	public Loja(LojaDTO loja) {
-		id = loja.getId();
-		cnpj = loja.getCnpj();
-		nome = loja.getNomeLoja();
-		email = loja.getEmail();
-		dataCadastro = loja.getDataCadastro();
 	}
 
 	public long getId() {
@@ -81,11 +74,11 @@ public class Loja implements Serializable {
 		this.email = email;
 	}
 
-	public LocalDate getDataCadastro() {
+	public Date getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(LocalDate dataCadastro) {
+	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 

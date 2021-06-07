@@ -21,7 +21,7 @@ public class ClienteService {
 	AgendamentoDAO agendamentoDao = new AgendamentoDAO();
 	LojaDAO lojaDao = new LojaDAO();
 
-	public List<ClienteDTO> encontraClientes(long idCliente, String nomeCliente, String cpfClienteS) throws Exception {
+	public List<ClienteDTO> encontraClientes(Long idCliente, String nomeCliente, String cpfClienteS) throws Exception {
 		List<ClienteDTO> clientes = new ArrayList<ClienteDTO>();
 		List<Cliente> entidades = new ArrayList<Cliente>();
 		entidades = dao.getClientes(idCliente, nomeCliente, cpfClienteS);
@@ -53,8 +53,10 @@ public class ClienteService {
 		}
 	}
 
-	public void excluirCliente(Long cliente) throws Exception {
-		dao.delete(cliente);
+	public void excluirCliente(Long idCliente) throws Exception {
+		Cliente cliente =  dao.find(idCliente);
+		cliente.setExcluido(true);
+		dao.update(cliente);
 	}
 
 	public void editarCliente(UsuarioDTO user) throws Exception {

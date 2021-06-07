@@ -1,5 +1,6 @@
 package br.com.carwash.service;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class AgendamentoService {
 		agendamento.setCliente(c);
 		agendamento.setLavaJato(lj);
 		agendamento.setDataAgendamento(agendamentoDto.getAgendamento());
-		agendamento.setDataLavagem(LocalDate.now());;
+		agendamento.setDataLavagem(Date.valueOf(LocalDate.now()));
 		dao.save(agendamento);
 	}
 

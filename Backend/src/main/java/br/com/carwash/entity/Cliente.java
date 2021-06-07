@@ -35,6 +35,9 @@ public class Cliente implements Serializable {
 	@Column(name = "DATA_NACIMENTO")
 	private Date dataNacimento;
 	
+	@Column(name = "EXCLUIDO")
+	private Boolean excluido = false;
+	
 	public Cliente() {
 		super();
 	}
@@ -93,6 +96,14 @@ public class Cliente implements Serializable {
 
 	public void setDataNacimento(Date dataNacimento) {
 		this.dataNacimento = dataNacimento;
+	}
+	
+	public boolean isExcluido() {
+		return excluido;
+	}
+
+	public void setExcluido(boolean excluido) {
+		this.excluido = excluido;
 	}
 
 	public Cliente toMerge(UsuarioDTO user) {
