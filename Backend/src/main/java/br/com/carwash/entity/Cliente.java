@@ -18,7 +18,7 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_CLIENTE")
-	private long id;
+	private Long id;
 
 	@Column(name = "CPF", unique = true)
 	private String cpf;

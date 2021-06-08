@@ -1,8 +1,10 @@
 package br.com.carwash.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -16,9 +18,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import br.com.carwash.dto.AgendamentoCompletoDTO;
+import br.com.carwash.dto.AgendamentoDTO;
 import br.com.carwash.dto.ClienteDTO;
 import br.com.carwash.dto.UsuarioDTO;
 import br.com.carwash.exception.NotValidDataException;
+import br.com.carwash.service.AgendamentoService;
 import br.com.carwash.service.ClienteService;
 
 
@@ -26,6 +31,20 @@ import br.com.carwash.service.ClienteService;
 public class RestCliente extends SuperRest{	
 	
 	static final ClienteService service = new ClienteService(); 
+	static final AgendamentoService agendamentoService = new AgendamentoService(); 
+	
+	@Path("/{cliente}/agendamento")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response solicitarAgendamentos(@PathParam("cliente") long cliente) {
+		List<AgendamentoCompletoDTO> agendamentos = new ArrayList<>();
+		try {
+			agendamentos =agendamentoService.encontraAgendamentosPorCliente(cliente);
+		}catch(Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+		return Response.status(Status.FOUND).entity(agendamentos).build();
+	}
 	
 	@POST
 	@Path("/{idCliente}/agendamento/{idloja}")
@@ -97,6 +116,7 @@ public class RestCliente extends SuperRest{
 	}
 	
 	@POST
+	@PermitAll
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response cadastarCliente(UsuarioDTO user) {
 		try {

@@ -51,4 +51,24 @@ public class AgendamentoDAO extends SuperDAO<Agendamento> {
 			throw e;
 		}
 	}
+
+	public List<Agendamento> buscaAgendamentosPorCliente(long id) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		try {
+			String sql = " SELECT a FROM Agendamento a "
+					+ " JOIN FETCH a.cliente c "
+					+ " JOIN FETCH a.lavaJato lf "
+					+ " WHERE c.id = :id AND c.excluido = :excluido ";
+
+			return em.createQuery(sql,Agendamento.class)
+					.setParameter("id",id)
+					.setParameter("excluido",(Boolean)false)
+					.getResultList();
+		}catch(Exception e) {
+			em.getTransaction().rollback();
+			em.close();
+			e.printStackTrace();
+			throw e;
+		}
+	}
 }

@@ -1,6 +1,4 @@
-**/Backend/target/
-/.idea**
-**/.idea
-/Backend/target/
+**/target/**
+**/.idea/**
 **/target/
 *.iml

@@ -11,6 +11,7 @@ import javax.ws.rs.NotFoundException;
 import br.com.carwash.dao.AgendamentoDAO;
 import br.com.carwash.dao.ClienteDAO;
 import br.com.carwash.dao.LojaDAO;
+import br.com.carwash.dto.AgendamentoCompletoDTO;
 import br.com.carwash.dto.AgendamentoDTO;
 import br.com.carwash.entity.Agendamento;
 import br.com.carwash.entity.Cliente;
@@ -47,6 +48,15 @@ public class AgendamentoService {
 		for(Agendamento a: listaEntity)
 			listaDto.add(new AgendamentoDTO(a));
 		return listaDto;
+	}
+
+	public List<AgendamentoCompletoDTO> encontraAgendamentosPorCliente(long cliente) {
+		List<AgendamentoCompletoDTO> agendamentosDto = new ArrayList<>();
+		List<Agendamento> agendamentos = dao.buscaAgendamentosPorCliente(cliente);
+		for(Agendamento a : agendamentos) {
+			agendamentosDto.add(new AgendamentoCompletoDTO(a));
+		}
+		return agendamentosDto;
 	}
 
 }
