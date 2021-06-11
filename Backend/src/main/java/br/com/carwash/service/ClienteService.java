@@ -14,6 +14,7 @@ import br.com.carwash.entity.Agendamento;
 import br.com.carwash.entity.Cliente;
 import br.com.carwash.entity.Loja;
 import br.com.carwash.exception.NotValidDataException;
+import br.com.carwash.utils.HibernateUtil;
 
 public class ClienteService {
 

@@ -52,4 +52,18 @@ public class ClienteDAO extends SuperDAO<Cliente> {
 		}
 	}
 
+	public Cliente pegaPorEmailSenha(String email, String senha) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		try {
+			String sql = " SELECT c FROM Cliente c "
+					+ " WHERE c.email = :email "
+					+ " AND c.senha = :senha ";
+			return em.createQuery(sql,Cliente.class).setParameter("senha", senha).setParameter("email",email).getSingleResult();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
 }
