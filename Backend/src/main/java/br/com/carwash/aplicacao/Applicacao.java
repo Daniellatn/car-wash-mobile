@@ -9,9 +9,4 @@ public class Applicacao  extends ResourceConfig {
 	public Applicacao() {
 		packages("br.com.carwash.rest.*");
 	}
-
-	public static String getTokenApiProperty() {
-		
-		return null;
-	}
 }

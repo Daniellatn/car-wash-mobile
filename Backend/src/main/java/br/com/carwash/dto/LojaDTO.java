@@ -1,20 +1,21 @@
 package br.com.carwash.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
-import javax.xml.stream.Location;
+import com.google.protobuf.DescriptorProtos.SourceCodeInfo.Location;
 
 import br.com.carwash.entity.Loja;
 
 public class LojaDTO {
 	
-	private Long id;
-	private String cnpj;
 	private String nomeLoja;
+	private Long id;
 	private String email;
 	private Date dataCadastro;
-	private Location localizacao;
-	
+	private String cnpj;
+	private Location localizacao = Location.getDefaultInstance();
+
 	public LojaDTO() {
 		
 	}

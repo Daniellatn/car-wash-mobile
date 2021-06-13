@@ -81,8 +81,6 @@ public class SuperDAO<T> {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
-		}finally {
-			em.close();
 		}
 	}
 
