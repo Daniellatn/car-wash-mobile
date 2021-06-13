@@ -10,6 +10,7 @@ import javax.persistence.Query;
 
 import br.com.carwash.entity.Cliente;
 import br.com.carwash.utils.HibernateUtil;
+import br.com.carwash.utils.StringUtil;
 
 public class ClienteDAO extends SuperDAO<Cliente> {
 	
@@ -49,6 +50,17 @@ public class ClienteDAO extends SuperDAO<Cliente> {
 			throw new Exception(e);
 		}finally {
 			em.close();
+		}
+	}
+
+	public Cliente findFromEmail(String email) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		try {
+			String hql = " SELECT c FROM Cliente c WHERE c.email LIKE :email ";
+			return em.createQuery(hql,Cliente.class).setParameter("email",StringUtil.getLikeString(email)).getSingleResult();
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
 		}
 	}
 

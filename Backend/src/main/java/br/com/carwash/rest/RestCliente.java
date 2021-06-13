@@ -19,9 +19,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import br.com.carwash.dto.AgendamentoCompletoDTO;
-import br.com.carwash.dto.AgendamentoDTO;
 import br.com.carwash.dto.ClienteDTO;
 import br.com.carwash.dto.UsuarioDTO;
+import br.com.carwash.exception.NotLogedException;
 import br.com.carwash.exception.NotValidDataException;
 import br.com.carwash.service.AgendamentoService;
 import br.com.carwash.service.ClienteService;
@@ -43,6 +43,8 @@ public class RestCliente extends SuperRest{
 		}catch(Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
+		if (agendamentos.size() == 0)
+			return Response.status(Status.NO_CONTENT).build();
 		return Response.status(Status.FOUND).entity(agendamentos).build();
 	}
 	
@@ -102,16 +104,24 @@ public class RestCliente extends SuperRest{
 		return Response.status(Status.OK).entity(cliente).build();
 	}
 	
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response encontraClientes(@QueryParam("cliente") Long idCliente, @QueryParam("nome") String nomeCliente,
 			@QueryParam("cpf") String cpfClienteS) {
 		List<ClienteDTO> clientes = null;
 		try {
+			isAtorizade();
 			clientes = service.encontraClientes(idCliente,nomeCliente,cpfClienteS );
+		}catch(NotLogedException e) {
+			e.printStackTrace();
+			return Response.status(Status.FORBIDDEN).entity("Usuario não Logado").build();
 		}catch(Exception e) {
+			e.printStackTrace();
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
+		if (clientes.size() == 0)
+			return Response.status(Status.NO_CONTENT).build();
 		return Response.status(Status.FOUND).entity(clientes).build();
 	}
 	

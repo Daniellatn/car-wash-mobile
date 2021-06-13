@@ -15,6 +15,7 @@ public class AgendamentoDAO extends SuperDAO<Agendamento> {
 		super(Agendamento.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Agendamento> pegarListaDeAgendamentos(Long agendamento, Long cliente, Long inicio,
 			Long fim) throws Exception {
 		EntityManager em = HibernateUtil.getEntityManager();

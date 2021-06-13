@@ -17,79 +17,95 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import br.com.carwash.dto.LojaDTO;
+import br.com.carwash.dto.ProutoCompletoDTO;
 import br.com.carwash.exception.NotValidDataException;
 import br.com.carwash.service.LavaJatoService;
 
 @Path("lavajato")
-public class RestJavaJato extends SuperRest{
+public class RestJavaJato extends SuperRest {
 
-	static final LavaJatoService service = new LavaJatoService(); 
+	static final LavaJatoService service = new LavaJatoService();
+
+	@Path("/{idLoja}/produto")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getProdutosPorLoja(@PathParam("idLoja") Long idLoja) {
+		try {
+			List<ProutoCompletoDTO> produtos = service.listaProdutosPorLoja(idLoja);
+			if (produtos.size() == 0)
+				return Response.status(Status.NO_CONTENT).build();
+			return Response.status(Status.FOUND).entity(produtos).build();
+		} catch (Exception e) {
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
 	@PUT
 	public Response solicitarEdicaoLoja(LojaDTO loja) {
 		try {
 			service.editarLoja(loja);
-		}catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			return Response.status(Status.EXPECTATION_FAILED).build();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
 		return Response.status(Status.ACCEPTED).build();
 	}
+
 	@DELETE
 	@Path("/{idLoja}")
 	public Response solicitaExclusao(@PathParam("idLoja") Long idLoja) {
 		try {
 			service.excluirLoja(idLoja);
-		}catch(IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			return Response.status(Status.EXPECTATION_FAILED).build();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
 		return Response.status(Status.ACCEPTED).build();
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarLojas(@QueryParam("cnpj") String cnpj,
-			@QueryParam("nome") String nomeLoja, 
-			@QueryParam("email") String email,@QueryParam("loja") Long id) {
+	public Response buscarLojas(@QueryParam("cnpj") String cnpj, @QueryParam("nome") String nomeLoja,
+			@QueryParam("email") String email, @QueryParam("loja") Long id) {
 		List<LojaDTO> lojas = null;
 		try {
-			lojas = service.econtrarLojas(id,nomeLoja,email,cnpj);
-		}catch(Exception e) {
+			lojas = service.econtrarLojas(id, nomeLoja, email, cnpj);
+		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
+		if (lojas.size() == 0)
+			return Response.status(Status.NO_CONTENT).build();
 		return Response.status(Status.FOUND).entity(lojas).build();
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{idLoja}")
-	public Response buscaCleinte(@PathParam("idLoja")Long idLoja) {
+	public Response buscaCleinte(@PathParam("idLoja") Long idLoja) {
 		LojaDTO loja = null;
 		try {
 			loja = service.encontraLoja(idLoja);
-		}catch(NotValidDataException e) {
+		} catch (NotValidDataException e) {
 			return Response.status(e.getStatusCode()).entity(e.getMessage()).build();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
 		return Response.status(Status.FOUND).entity(loja).build();
 	}
-	
+
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response criaNovaLoja(LojaDTO loja) {
-		if(Objects.isNull(loja))
+		if (Objects.isNull(loja))
 			return Response.status(Status.BAD_REQUEST).build();
 		try {
 			service.cadastrarLoja(loja);
-		}catch(NotValidDataException e) {
+		} catch (NotValidDataException e) {
 			return Response.status(e.getStatusCode()).build();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
 		return Response.status(Status.CREATED).build();

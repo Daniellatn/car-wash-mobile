@@ -8,14 +8,17 @@ import java.util.List;
 import javax.ws.rs.core.Response.Status;
 
 import br.com.carwash.dao.LojaDAO;
+import br.com.carwash.dao.ProdutoDAO;
 import br.com.carwash.dto.LojaDTO;
+import br.com.carwash.dto.ProutoCompletoDTO;
 import br.com.carwash.entity.Loja;
+import br.com.carwash.entity.Produto;
 import br.com.carwash.exception.NotValidDataException;
 
 public class LavaJatoService {
 
 	LojaDAO dao = new LojaDAO(); 
-	
+	ProdutoDAO produtoDao = new ProdutoDAO();
 	public List<LojaDTO> econtrarLojas(Long id, String nomeLoja, String email, String cnpj) throws Exception {
 		List<LojaDTO> lojas = new ArrayList<LojaDTO>();
 		List<Loja> lojasEt = dao.getListLojas(id,nomeLoja,email,cnpj);
@@ -53,6 +56,15 @@ public class LavaJatoService {
 	public void editarLoja(LojaDTO lavajato) throws Exception {
 		Loja loja= dao.find(lavajato.getId());
 		dao.update(loja.toEtity(lavajato));
+	}
+
+	public List<ProutoCompletoDTO> listaProdutosPorLoja(Long idLoja) {
+		List<Produto> produtos = produtoDao.econtraListaProtudosCliente(idLoja);
+		List<ProutoCompletoDTO> listProduto = new ArrayList<ProutoCompletoDTO>();
+		for(Produto p :produtos) {
+			listProduto.add(new ProutoCompletoDTO(p));
+		}
+		return listProduto;
 	}
 
 }

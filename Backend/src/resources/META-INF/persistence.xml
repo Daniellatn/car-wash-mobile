@@ -4,6 +4,7 @@
 		<class>br.com.carwash.entity.Cliente</class>
 		<class>br.com.carwash.entity.Loja</class>
 		<class>br.com.carwash.entity.Agendamento</class>
+		<class>br.com.carwash.entity.Produto</class>
 		<properties>
 
 			<!-- LOCALHOST MYSQL -->

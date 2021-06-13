@@ -26,7 +26,7 @@ public class Cliente implements Serializable {
 	@Column(name = "NOME")
 	private String nome;
 
-	@Column(name = "DS_EMAIL")
+	@Column(name = "DS_EMAIL" ,unique = true)
 	private String email;
 
 	@Column(name = "SENHA")
@@ -37,6 +37,7 @@ public class Cliente implements Serializable {
 	
 	@Column(name = "EXCLUIDO")
 	private Boolean excluido = false;
+	
 	
 	public Cliente() {
 		super();
@@ -50,11 +51,11 @@ public class Cliente implements Serializable {
 		dataNacimento = user.getDataNacimento();
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -103,6 +104,14 @@ public class Cliente implements Serializable {
 	}
 
 	public void setExcluido(boolean excluido) {
+		this.excluido = excluido;
+	}
+
+	public Boolean getExcluido() {
+		return excluido;
+	}
+
+	public void setExcluido(Boolean excluido) {
 		this.excluido = excluido;
 	}
 

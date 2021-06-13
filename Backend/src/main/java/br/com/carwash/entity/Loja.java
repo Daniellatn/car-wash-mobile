@@ -1,7 +1,6 @@
 package br.com.carwash.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -9,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import com.google.protobuf.DescriptorProtos.SourceCodeInfo.Location;
 
 import br.com.carwash.dto.LojaDTO;
 
@@ -29,8 +27,8 @@ public class Loja implements Serializable {
 	@Column(name = "NOME_LOJA")
 	private String nome;
 
-	@Column(name = "LOCALIZACAO_LOJA")
-	private Location localizacao;
+//	@Column(name = "LOCALIZACAO_LOJA")
+//	private Location localizacao;
 
 	@Column(name = "DS_EMAIL")
 	private String email;
@@ -80,14 +78,6 @@ public class Loja implements Serializable {
 
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
-	}
-
-	public Location getLocalizacao() {
-		return localizacao;
-	}
-
-	public void setLocalizacao(Location localizacao) {
-		this.localizacao = localizacao;
 	}
 
 	public Loja toEtity(LojaDTO lavajato) {

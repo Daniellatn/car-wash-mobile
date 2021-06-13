@@ -23,8 +23,7 @@ public class ClienteService {
 
 	public List<ClienteDTO> encontraClientes(Long idCliente, String nomeCliente, String cpfClienteS) throws Exception {
 		List<ClienteDTO> clientes = new ArrayList<ClienteDTO>();
-		List<Cliente> entidades = new ArrayList<Cliente>();
-		entidades = dao.getClientes(idCliente, nomeCliente, cpfClienteS);
+		List<Cliente> entidades = dao.getClientes(idCliente, nomeCliente, cpfClienteS);
 		for (Cliente c : entidades) {
 			clientes.add(new ClienteDTO(c));
 		}

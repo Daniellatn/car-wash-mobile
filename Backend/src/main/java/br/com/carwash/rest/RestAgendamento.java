@@ -27,8 +27,10 @@ public class RestAgendamento extends SuperRest{
 	public Response EcontraoAgendamentos(@QueryParam("agendamento") Long agendamento,
 			@QueryParam("inicio") Long inicio, @QueryParam("fim") Long fim,@QueryParam("cliente") Long cliente) {
 		try {
-			List<AgendamentoDTO> agendamentoDto = service.buscaListaAgendamentos(agendamento,cliente,inicio,fim);
-			return Response.status(Status.FOUND).entity(agendamentoDto).build();
+			List<AgendamentoDTO> agendamentos = service.buscaListaAgendamentos(agendamento,cliente,inicio,fim);
+			if (agendamentos.size() == 0)
+				return Response.status(Status.NO_CONTENT).build();
+			return Response.status(Status.FOUND).entity(agendamentos).build();
 		}catch(Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
