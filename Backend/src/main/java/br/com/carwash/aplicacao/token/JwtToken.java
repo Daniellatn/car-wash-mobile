@@ -37,4 +37,9 @@ public class JwtToken {
 				.setSigningKey(Keys.hmacShaKeyFor(segredo))
 				.parseClaimsJws(jwt).getBody();
 	}
+
+	public static long extractTokenId(String jtws) {
+		Claims claims =getClaim(jtws);
+		return claims.get("token-id", Long.class);
+	}
 }

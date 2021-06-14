@@ -15,10 +15,15 @@ public class AutenticacaoService {
 	private static ClienteDAO  dao = new ClienteDAO();
 
 	public String gerarAutenticacao(LoginDTO login) throws Exception  { 
-		Cliente cliente = dao.findFromEmail(login.getEmail());
+		Cliente cliente = dao.findFromEmail(login.getEmail(),login.getSenha());
 		if(cliente == null) throw new NotValidDataException(Status.BAD_REQUEST,"Usuário invalido");
 		if(!login.getSenha().equals(cliente.getSenha()))
 			throw new SenhaIvalidaException();
+		return JwtToken.getStringTocken(new UsuarioAutenticado(cliente));
+	}
+
+	public String renovarToken(Long id) throws Exception {
+		Cliente cliente = dao.find(id);
 		return JwtToken.getStringTocken(new UsuarioAutenticado(cliente));
 	}
 	

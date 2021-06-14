@@ -6,4 +6,8 @@ public class StringUtil {
 		return "%" + StringTarget.replaceAll(" ", "%")+ "%";
 	}
 
+	public static String extractformatedToken(String jwts) {
+		return jwts.replace("Bearer ","");
+	}
+
 }

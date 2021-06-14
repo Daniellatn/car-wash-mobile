@@ -31,6 +31,7 @@ public class RestJavaJato extends SuperRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getProdutosPorLoja(@PathParam("idLoja") Long idLoja) {
 		try {
+			isAtorizade();
 			List<ProutoCompletoDTO> produtos = service.listaProdutosPorLoja(idLoja);
 			if (produtos.size() == 0)
 				return Response.status(Status.NO_CONTENT).build();
@@ -43,6 +44,7 @@ public class RestJavaJato extends SuperRest {
 	@PUT
 	public Response solicitarEdicaoLoja(LojaDTO loja) {
 		try {
+			isAtorizade();
 			service.editarLoja(loja);
 		} catch (IllegalArgumentException e) {
 			return Response.status(Status.EXPECTATION_FAILED).build();
@@ -57,6 +59,7 @@ public class RestJavaJato extends SuperRest {
 	@Path("/{idLoja}")
 	public Response solicitaExclusao(@PathParam("idLoja") Long idLoja) {
 		try {
+			isAtorizade();
 			service.excluirLoja(idLoja);
 		} catch (IllegalArgumentException e) {
 			return Response.status(Status.EXPECTATION_FAILED).build();
@@ -72,6 +75,7 @@ public class RestJavaJato extends SuperRest {
 			@QueryParam("email") String email, @QueryParam("loja") Long id) {
 		List<LojaDTO> lojas = null;
 		try {
+			isAtorizade();
 			lojas = service.econtrarLojas(id, nomeLoja, email, cnpj);
 		} catch (Exception e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
@@ -87,6 +91,7 @@ public class RestJavaJato extends SuperRest {
 	public Response buscaCleinte(@PathParam("idLoja") Long idLoja) {
 		LojaDTO loja = null;
 		try {
+			isAtorizade();
 			loja = service.encontraLoja(idLoja);
 		} catch (NotValidDataException e) {
 			return Response.status(e.getStatusCode()).entity(e.getMessage()).build();

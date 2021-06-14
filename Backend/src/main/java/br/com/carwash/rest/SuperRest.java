@@ -8,6 +8,7 @@ import javax.ws.rs.core.Context;
 
 import br.com.carwash.aplicacao.token.JwtToken;
 import br.com.carwash.exception.NotLogedException;
+import br.com.carwash.utils.StringUtil;
 
 public class SuperRest {
 
@@ -21,11 +22,20 @@ public class SuperRest {
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;
 	}
-	public boolean isAtorizade() throws NotLogedException {
-		String jwts = request.getHeader("Authorization");
+	
+	private String getBarrierTocken() {
+		return request.getHeader("Authorization");
+	}
+	
+	protected boolean isAtorizade() throws NotLogedException {
+		String jwts = getBarrierTocken();
 		if(Objects.isNull(jwts))
 			throw new NotLogedException();
-		JwtToken.getClaim(jwts.replace("Bearer ",""));
+		JwtToken.getClaim(StringUtil.extractformatedToken(jwts));
 		return !jwts.isEmpty();
+	}
+	protected Long getTokenId() {
+		String jtwsf = StringUtil.extractformatedToken(getBarrierTocken());
+		return (long) JwtToken.extractTokenId(jtwsf);
 	}
 }

@@ -17,6 +17,7 @@ public class RestProduto extends SuperRest {
 	@POST
 	public Response cadastarProduto(ProdutoCadastroDTO dto) {
 		try {
+			isAtorizade();
 			service.criarProduto(dto);
 		} catch (NotValidDataException e) {
 			return Response.status(e.getStatusCode()).entity(e.getMessage()).build();
